@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:beans="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- 下面的这个扫描很重要，用于建立uri与controller指尖的映射 -->
+    <context:component-scan base-package="com.hust.hui.doraemon.cache"/>
+    <context:annotation-config/>
+    <beans:annotation-driven/>
+
+    <bean id="cachePropertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="2" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath*:conf/cache.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="cacheWrapper" class="com.hust.hui.doraemon.cache.CacheWrapper">
+        <property name="masterConf" value="${cache.masterConfig}" />
+        <property name="slaveConf" value="${cache.slaveConfigs}" />
+        <property name="timeout" value="${cache.timeout}" />
+        <property name="database" value="${cache.database}" />
+        <property name="maxTotal" value="${cache.maxTotal}" />
+        <property name="maxIdle" value="${cache.maxIdle}" />
+        <property name="minIdle" value="${cache.minIdle}" />
+    </bean>
+
+</beans>
