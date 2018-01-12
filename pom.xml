@@ -13,9 +13,11 @@
         <module>client</module>
         <module>console</module>
         <module>cache</module>
+        <module>api</module>
     </modules>
 
     <properties>
+        <doraemon-api.version>1.0-SNAPSHOT</doraemon-api.version>
         <doraemon-core.version>1.0-SNAPSHOT</doraemon-core.version>
         <doraemon-client.version>1.0-SNAPSHOT</doraemon-client.version>
         <doraemon-console.version>1.0-SNAPSHOT</doraemon-console.version>

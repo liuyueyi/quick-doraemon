@@ -1,5 +1,6 @@
 package com.hust.hui.doraemon.cache;
 
+import com.hust.hui.doraemon.api.IDaoWrapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
@@ -22,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Getter
 @Setter
-public class CacheWrapper {
+public class CacheWrapper implements IDaoWrapper {
     private Logger logger = LoggerFactory.getLogger(CacheWrapper.class);
 
     private JedisPool masterJedis;

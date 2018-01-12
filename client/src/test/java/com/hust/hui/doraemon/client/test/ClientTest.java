@@ -1,14 +1,14 @@
 package com.hust.hui.doraemon.client.test;
 
+import com.hust.hui.doraemon.api.exception.DaoWrapperNotInitException;
 import com.hust.hui.doraemon.cache.CacheWrapper;
 import com.hust.hui.doraemon.cache.builder.CacheWrapperBuild;
 import com.hust.hui.doraemon.client.MetaClient;
 import com.hust.hui.doraemon.client.MetaClientBuilder;
-import com.hust.hui.doraemon.client.MetaClientManager;
 import com.hust.hui.doraemon.client.listener.IGlobalChangeListener;
 import com.hust.hui.doraemon.client.listener.ISingleChangeListener;
 import com.hust.hui.doraemon.core.entity.MetaConf;
-import com.hust.hui.doraemon.core.manager.CacheMetaManager;
+import com.hust.hui.doraemon.core.manager.MetaConfManagerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public class ClientTest {
     private static final String LISTEN_KEY = "testKey";
 
     @Before
-    public void init() {
+    public void init() throws DaoWrapperNotInitException {
         // 非spring方式启动, cacheMetaManager 必须优先设置
         CacheWrapper cacheWrapper = CacheWrapperBuild.builder()
                 .setMasterConf("127.0.0.1:6379")
@@ -34,11 +34,9 @@ public class ClientTest {
                 .setMinIdle(2)
                 .setMaxTotal(10)
                 .build();
-        CacheMetaManager cacheMetaManager = new CacheMetaManager(cacheWrapper);
-        MetaClientManager.getInstance().setMetaConfManager(cacheMetaManager);
-
 
         metaClient = MetaClientBuilder.with(GROUP)
+                .initMetaConf(MetaConfManagerFactory.createConfManager(cacheWrapper))
                 .addGlobalListener(new IGlobalChangeListener() {
                     @Override
                     public void configChanged(MetaConf metaConf) {

@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.hust.hui.doraemon</groupId>
+            <artifactId>doraemon-api</artifactId>
+            <version>${doraemon-api.version}</version>
+        </dependency>
+        <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
